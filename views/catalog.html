@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>目录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet"/>
+		<script src="../javascripts/jquery-2.1.4.min.js" type="text/javascript" ></script>
+		<script src="../javascripts/bootstrap.min.js" type="text/javascript"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+    	.catalog-content{
+    		margin-top: 7%;
+    		
+    	}
+    	.catalog-row{
+    		border-left: 1px solid #888888;
+    		border-right: 1px solid #888888;
+    		box-shadow: 0px 0px 55px #888;
+    		min-height: 800px;
+    	}
+    
+    </style>
+  </head>
+  <body class="news">
+  	<% include header.html %>
+  	<div class="container" <!--style="background-color: green;"-->>
+  		<div class="row catalog-row">
+  			<div class="catalog-content col-sm-8 col-md-8 col-xs-12" id="catalog-content">
+  				<ul>
+  					<h3><strong>目录</strong></h3>
+  					<%list.forEach(function(item,index){%>
+  						<li style="line-height: 30px;"><span><%=item.createDate%></span>&nbsp;&nbsp;&nbsp;<a href="/admin/catalog/postDetails/<%= item.id%>/<%=item.type%>"><span style="letter-spacing: 3px;"><%=item.name%></span></a></li>
+  					<%})%>
+  				</ul>		
+	  		</div>
+	  	</div>
+  	</div>
+  	<% include foot.html %>
+  </body>
+</html>

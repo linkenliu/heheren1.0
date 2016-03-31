@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>学海无涯</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../stylesheets/bootstrap.min.css" rel="stylesheet"/>
+		<script src="../javascripts/jquery-2.1.4.min.js" type="text/javascript" ></script>
+		<script src="../javascripts/bootstrap.min.js" type="text/javascript"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+    	.biaoqian:hover:nth-child(2){
+    		box-shadow:  0 0 30px deeppink;
+    	}
+    	.biaoqian:hover:nth-child(3){
+    		box-shadow:  0 0 30px deepskyblue;
+    	}
+    	.biaoqian:hover:nth-child(4){
+    		box-shadow:  0 0 30px blue;
+    	}
+    	.biaoqian:hover:nth-child(5){
+    		box-shadow:  0 0 30px brown;
+    	}
+    </style>
+  </head>
+  <body class="news">
+  	<% include header.html %>
+  	<div class="container" style="box-shadow: 0px 0px 55px #888;">
+  		<div class="row">
+  			<div class="heheren-content col-sm-8 col-md-8" id="heheren-content">
+  			<%list.forEach(function(item,index){%>
+	  			<div class="col-md-12 context-study">
+	  				<div class="context-img col-md-5"><a href="/admin/study/postDetails/<%= item.id%>/<%=item.type%>"><img src="<%=item.banner%>"></a></div>
+	  				<div class="context-text col-md-7">
+	  					<p>
+	  						<%if(item.name.length > 18){%>
+	  								<a href="/admin/study/postDetails/<%= item.id%>/<%=item.type%>"><%=item.name.substring(0,18)%>...</a>
+	  						<%}else{%>
+	  								<a href="/admin/study/postDetails/<%= item.id%>/<%=item.type%>"><%=item.name%></a>
+	  						<%}%>	
+	  					</p>
+	  					<div class="desc<%=index%>" id="desc"> 
+	  							<%-item.summary%>
+	  					</div>
+	  					<div class="author">
+		  					<strong><span>所属 : 
+		  						<%if(item.secondaryName){%>
+		  							<span style="color: green;"><%=item.secondaryName%></span>
+		  						<%}else{%>
+		  							<span style="color: green;"><%=item.firstName%></span>
+		  						<%}%>	
+		  					</span></strong>
+		  					<!--<img href="#" src="../images/stars.png"/>-->
+		  					&nbsp;&nbsp;
+		  					<strong><span>推荐于 : <%=item.createDate%></span></strong>
+		  					&nbsp;&nbsp;
+		  					<strong><span>阅读 :(<%=item.readerCount%>)</span></strong>
+	  					</div>
+	  				</div>
+	  			</div>
+	  			<%})%>
+	  			</div>
+	  			<aside class="col-sm-3 col-md-3  post-details-left">
+	  			<div style="height: 120px;position: ;" class="">
+	  				<div style="background-color: ;" class="">
+	  					<p style="font-size: 18px;font-family: '微软雅黑';color: #000000;">云标签</p>
+	  				</div>
+	  				<div style="background-color: deeppink;width: 60px;float: left;text-align: center;height: 60px;border-radius: 50%;margin-left: 5px;padding-top: 20px;" class="biaoqian">
+	  					<a href="#">JAVA</a>
+	  				</div>
+	  				<div style="background-color: deepskyblue;width: 60px;float: left;text-align: center;height: 60px;border-radius: 50%;margin-left: 3px;padding-top: 20px;" class="biaoqian">
+	  					<a href="#">NODE</a>
+	  				</div>
+	  				<div style="background-color: bisque;width: 60px;float: left;text-align: center;height: 60px;border-radius: 50%;margin-left: 3px;padding-top: 20px;" class="biaoqian">
+	  					<a href="#">JS</a>
+	  				</div>
+	  				<div style="background-color: brown;width: 60px;float: left;text-align: center;height: 60px;border-radius: 50%;margin-left: 3px;padding-top: 20px;" class="biaoqian">
+	  					<a href="#">HTML</a>
+	  				</div>
+	  			</div>
+					<div class="post-list" >
+						<h4 class="post-item post-top-list">最新栏目</h4>
+						<div>
+							<%newList.forEach(function(item,index){%>
+							<%if(item.name.length > 15){%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name.substring(0,15)%>...</a>
+	  						<%}else{%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name%></a>
+	  						<%}%>	
+	  						<%})%>
+						</div>
+					</div>
+					<div class="post-list">
+						<h4 class="post-item post-top-list">最热栏目</h4>
+						<div>
+							<%readerList.forEach(function(item,index){%>
+							<%if(item.name.length > 15){%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name.substring(0,15)%>...</a>
+	  						<%}else{%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name%></a>
+	  						<%}%>	
+	  						<%})%>
+						</div>
+					</div>
+				</aside>	
+	  		<br />
+	  	</div>
+  	</div>
+  	<% include foot.html %>
+  </body>
+  <script>
+  </script>
+</html>

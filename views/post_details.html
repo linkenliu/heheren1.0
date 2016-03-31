@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8">
+		<title><%=postObj.name%></title>
+		<link href="/stylesheets/bootstrap.min.css" rel="stylesheet"/>
+		<script src="/javascripts/jquery-2.1.4.min.js" type="text/javascript" ></script>
+		<script src="/javascripts/bootstrap.min.js" type="text/javascript"></script>
+    	<link rel='stylesheet' href='/stylesheets/style.css' />
+	</head>
+	<style>
+		.details-list{
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		.g{
+			background: #F8F8F8 url("/images/guanjianzi.png") no-repeat scroll 10px center;
+			line-height: 30px;
+			height: 30px;
+			padding-left: 40px;
+			border: 1px solid #F0F0F0;
+			margin-right: 20px;
+			margin-top: 30px;
+			font-size: 14px;
+			margin-bottom: -20px;
+			color: green;
+		}
+		.otherlink>h2{
+			border-bottom: 2px solid #099;
+			line-height: 40px;
+			font-size: 14px;
+			font-weight: normal;
+			margin-right: 20px;
+			background: transparent url("/images/wenzhang.png") no-repeat scroll 10px center;
+			padding-left: 40px;
+		}
+		.otherlink ul{
+			list-style: outside none none;
+		}
+		.otherlink ul li{
+			line-height: 24px;
+			height: 24px;
+			display: block;
+			width: 290px;
+			float: left;
+			overflow: hidden;
+			margin-right: 30px;
+		}
+	</style>
+	<% include header.html %>
+	<body class="post-details-body">
+		
+		<div class="container" style="box-shadow: 0px 0px 55px #888;">
+			<div class="row">
+				<div class="col-md-9 post-details-main">
+					<h3><%=postObj.name%></h3>
+					<h5>发布时间:<%=postObj.createDate%>&nbsp;&nbsp;&nbsp;阅读(<%=postObj.readerCount%>)</h5>
+					<hr />
+					<div class="col-md-12 details-list">
+					<p id="desc">
+						<!--123的积分多好看就发挥开多好看就发挥开发发多喝水的积分多好看就发挥开多好看就发挥开发发多喝水的积分多好看就发挥开多好看就发挥开发发多喝水的积分多好看就发挥开多好看就发挥开发发多喝水
+						<div class="col-md-12 col-md-offset-1 details-img">
+						<img src="http://7xoxjl.com1.z0.glb.clouddn.com/FqPnf9c1pYzLwaoDoECxZ3EIzXfx" class="col-md-10">
+						</div>
+						456的积分多好看就发挥开多好看就发挥开发发多喝水的积分多好看就发挥开多好看就发挥开发发多喝水的积分多好看就发挥开多好看就发挥开发发多喝水-->
+						<%-postObj.details%>
+					</p>
+					<div class="ds-share" data-thread-key="<%=postObj.id%>" data-title="<%=postObj.name%>" data-images="<%=postObj.banner%>" data-content="<%=postObj.summary%>" data-url="http://www.linken.com">
+					    <div class="ds-share-aside-right">
+					      <div class="ds-share-aside-inner">
+					      </div>
+					      <div class="ds-share-aside-toggle">分享到</div>
+					    </div>
+					</div>
+					<div  class="col-md-12 g">关键字:git node</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 30px;">
+						<div class="ds-share" data-thread-key="<%=postObj.id%>" data-title="<%=postObj.name%>" data-images="<%=postObj.banner%>" data-content="<%=postObj.summary%>" data-url="http://www.linken.com/admin/<%=postObj.id%>">
+						    <div class="ds-share-inline">
+						      <ul  class="ds-share-icons-16">
+						      	
+						      	<li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+						        <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+						        <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+						        <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+						        <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+						      	
+						      </ul>
+						      <div class="ds-share-icons-more">
+						      </div>
+						    </div>
+						 </div>
+					</div>
+					<div class="col-md-12 otherlink">
+						<h2>相关栏目</h2>
+						<ul>
+							<%relatedList.forEach(function(item,index){%>
+							<li><a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name%></a></li>
+							<%})%>
+						</ul>
+					</div>
+					<!-- 多说评论框 start -->
+					<div class="ds-thread col-md-12 col-sm-12 col-xs-12" data-thread-key="<%=postObj.id%>" data-title="<%=postObj.name%>" data-url="http://www.linken.com"></div>
+					<!-- 多说评论框 end -->
+					<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+					<script type="text/javascript">
+					var duoshuoQuery = {short_name:"linken"};
+						(function() {
+							var ds = document.createElement('script');
+							ds.type = 'text/javascript';ds.async = true;
+							ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+							ds.charset = 'UTF-8';
+							(document.getElementsByTagName('head')[0] 
+							 || document.getElementsByTagName('body')[0]).appendChild(ds);
+						})();
+					</script>
+					<!-- 多说公共JS代码 end -->
+				</div>		
+				<aside class="col-md-3 post-details-left">
+					<div class="post-list">
+						<h4 class="post-item post-top-list">最新栏目</h4>
+						<div>
+							<%newList.forEach(function(item,index){%>
+							<%if(item.name.length > 15){%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name.substring(0,15)%>...</a>
+	  						<%}else{%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name%></a>
+	  						<%}%>	
+	  						<%})%>
+						</div>
+					</div>
+					<div class="post-list">
+						<h4 class="post-item post-top-list">相关栏目</h4>
+						<div>
+							<%relatedList.forEach(function(item,index){%>
+							<%if(item.name.length > 15){%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name.substring(0,15)%>...</a>
+	  						<%}else{%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name%></a>
+	  						<%}%>	
+	  						<%})%>
+						</div>
+					</div>
+					<div class="post-list">
+						<h4 class="post-item post-top-list">最热栏目</h4>
+						<div>
+							<%readerList.forEach(function(item,index){%>
+							<%if(item.name.length > 15){%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name.substring(0,15)%>...</a>
+	  						<%}else{%>
+	  								<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><%=index+1%>.<%=item.name%></a>
+	  						<%}%>	
+	  						<%})%>
+						</div>
+					</div>
+					<div class="visitors">
+					<h3><p>最近访客</p></h3>
+					<ul class="ds-recent-visitors"></ul>
+					</div>
+				</aside>	
+			</div>
+		</div>
+		<% include foot.html %>
+	</body>
+</html>

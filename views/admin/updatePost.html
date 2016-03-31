@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include layout/header.html %>
+<title>编辑帖子</title>
+</head>
+<script type="text/javascript">
+	$(function(){
+		var token = $("#token").val();
+		uploadImg(token);
+		uploadBanner(token);
+		
+	});
+	function getSecondaryName(){
+		var id = $("#id").val();
+		$("#secondaryId").empty().append("<option value='0'>请选择二级分类</option>");
+		$.ajax({
+			type:"POST",
+			url:"/superAdmin/querySecondary",
+			data:"id="+id,
+			success:function(dataList){
+				for(var i =0;i<dataList.length;i++){
+					$("#secondaryId").append("<option value='"+dataList[i].id+"'>"+dataList[i].secondaryName+"</option>");
+				}
+			}
+		})
+	}; 
+	function getText(obj1,obj2){
+		var oCtl = document.forms[0].elements[obj2];
+		oCtl.value = obj1.options[obj1.selectedIndex].text;
+	}
+	
+	function delImg(id){
+		alert(id)
+		$("#item"+id).remove();
+		$.post(
+			'/superAdmin/image/delete',
+			{qiniuKey:id},
+			function(data){
+				
+			}
+		);
+	}
+</script>
+<body>
+	<!-- topbar starts -->
+	<% include layout/topbar.html %>
+	<!-- topbar ends -->
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<!-- left menu starts -->
+			<% include layout/leftmenu.html %>
+			<!-- left menu ends -->
+		</div>
+		<div class="box col-sm-10 col-lg-10">
+			<div class="box-inner">
+				
+				<div class="box-header well" data-original-title="">
+					<h2>
+						<i class="glyphicon glyphicon-user"></i>编辑帖子
+					</h2>
+
+					<div class="box-icon">
+						<a href="#" class="btn btn-minimize btn-round btn-default"><i
+							class="glyphicon glyphicon-chevron-up"></i></a> <a href="#"
+							class="btn btn-close btn-round btn-default"><i
+							class="glyphicon glyphicon-remove"></i></a>
+					</div>
+				</div>
+				<div class="box-content">
+					<form class="form-horizontal" action="/superAdmin/updatePost" method="post">
+					  <input type="hidden" name="id" value="<%=post.id%>"/>
+					  <div class="form-group form-group-sm">
+					    <label for="inputEmail3" class="col-sm-1 control-label">标题:</label>
+					    <div class="col-sm-4">
+					      <input type="text" class="form-control" id="inputEmail3" placeholder="标题" name="name" value="<%=post.name%>" required="required">
+					    </div>
+					  </div>
+					  <div class="form-group form-group-sm">
+					    <label for="inputEmail3" class="col-sm-1 control-label">分类:</label>
+					    <div class="col-sm-2">
+					    <select  class="form-control" id="id" name="type" onchange="getSecondaryName(),getText(this,'firstName')" required="required">
+				      		<option value="">请选择一级分类</option>
+				      		<%firstList.forEach(function(item,index){%>
+				      			<%if(post.type == item.id){%>
+				      				<option  selected="selected" value="<%=item.id%>"><%=item.name%></option>
+				      			<%}else{%>
+				      				<option  value="<%=item.id%>"><%=item.name%></option>
+				      			<%}%>
+				      		<%})%>
+					      </select>
+					      <input type="hidden" name="firstName" /> 
+					    </div>
+					    <div class="col-sm-2">
+					    	 <select  class="form-control" id="secondaryId" name = "secondaryType" onchange="getText(this,'secondaryName')">
+					    		<option value='0'>请选择二级分类</option>
+					    		<%secondaryList.forEach(function(item,index){%>
+					      			<%if(post.secondaryType == item.id){%>
+					      				<option selected="selected" value="<%=item.id%>"><%=item.secondaryName%></option>
+					      			<%}else{%>
+					      				<option value="<%=item.id%>"><%=item.secondaryName%></option>
+					      			<%}%>
+					      		<%})%>
+					     	</select>
+					     	<input type="hidden" name="secondaryName">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					  	<label for="inputEmail3" class="col-sm-1 control-label">广告位:</label>
+					  	<div class="col-sm-2">
+					  	<%if(post.isBanner == 0){%>"
+					  	<label class="radio-inline">
+						  <input type="radio" name="isBanner" checked="checked"  id="inlineRadio1" value="0" >否
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="isBanner"  id="inlineRadio2" value="1">是
+						</label>
+						<%}else{%>
+						<label class="radio-inline">
+						  <input type="radio" name="isBanner"  id="inlineRadio1" value="0" >否
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="isBanner" checked="checked"   id="inlineRadio2" value="1">是
+						</label>	
+						<%}%>
+						</div>
+						<label for="inputEmail3" class="col-sm-1 control-label">推荐:</label>
+					  	<div class="col-sm-2">
+					  	<label class="radio-inline">
+						  <input type="radio" <%if(post.isRecommend == 0){%>checked="checked"<%}%>  name="isRecommend" id="inlineRadio1" value="0">否
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" <%if(post.isRecommend == 1){%>checked="checked"<%}%> name="isRecommend" id="inlineRadio2" value="1">是
+						</label>
+						</div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-1 control-label">banner:</label>
+					     <input type="hidden" value="<%=qntoken%>" id="token"/>
+					    <div class="col-sm-10">
+					     <div id="picker2"><i class="glyphicon glyphicon-plus"></i></div>
+					     <div id="banner">
+					     	<%if(post.banner !=null && post.banner !=''){%>
+					      		<div class="item-uploader" id="item<%=post.banner%>">
+						      		<img src="http://7xoxjl.com1.z0.glb.clouddn.com/<%=post.banner%>" class="images-uploader" name="" width="120" height="80">
+						      		<a  href="#" onclick="delImg('<%=post.banner%>')" class="delimg" id="delimg" ><i class="glyphicon glyphicon-remove" style="color:red"></i></a>
+						     		<input type="hidden" value="<%=post.banner%>" name="banner"/>
+						     	</div>
+						     <%}%>
+					     </div>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="inputEmail3" class="col-sm-1 control-label">图片:</label>
+					     <input type="hidden" value="${qiuniuToken }" id="token"/>
+					    <div class="col-sm-10">
+					     <div id="picker"><i class="glyphicon glyphicon-plus"></i></div>
+					     <div id="imgList">
+					      	<%if(pictureArr != ''){%>
+					      		<%pictureArr.forEach(function(item,index){%>
+					      		<div class="item-uploader" id="item<%=item%>">
+						      		<img src="http://7xoxjl.com1.z0.glb.clouddn.com/<%=item%>" class="images-uploader" name="" width="120" height="80">
+						      		<a  href="#" onclick="delImg('<%=item%>')" class="delimg" id="delimg" ><i class="glyphicon glyphicon-remove" style="color:red"></i></a>
+						     		<input type="hidden" value="<%=item%>" name="picture"/>
+						     	</div>
+					      		<%})%>
+					     	<%}%>
+					     </div>
+					    </div>
+					  </div>
+					  <div class="form-group form-group">
+					    <label for="inputPassword3" class="col-sm-1 control-label">内容:</label>
+					    <div class="col-sm-10">
+					   	  <textarea rows="10" cols="15" class="form-control" placeholder="内容" name="details"  required="required"><%=post.details%></textarea>
+					    </div>
+					  </div>
+					  <div class="form-group form-group">
+					    <label for="inputPassword3" class="col-sm-1 control-label">总结:</label>
+					    <div class="col-sm-6">
+					   	  <textarea rows="5" cols="5" class="form-control" placeholder="总结" name="summary" required="required"><%=post.summary%></textarea>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-1 col-sm-6">
+					      <button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-ok"></i> 保存</button>
+					      <a href="/superAdmin/queryPostList" class="btn btn-default btn-sm"><i class=" glyphicon glyphicon-remove"></i> 取消</a>
+					    </div>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--/span-->
+
+	</div>
+	<!--/row-->
+	<% include layout/footer.html %>
+</body>
+</html>

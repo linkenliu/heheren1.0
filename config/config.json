@@ -1,0 +1,16 @@
+{
+	"db": {
+		"dbhost": "127.0.0.1",
+		"port": 3306,
+		"username": "root",
+		"password": "tiger",
+		"database": "heheren",
+		"charset": "utf-8",
+		"connectionLimit": 50,
+		"supportBigNumbers": true,
+		"bigNumberStrings": true
+	},
+  	"qiniu":{
+	  "download_website": "http://7xoxjl.com1.z0.glb.clouddn.com/"
+	}
+}

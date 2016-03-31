@@ -1,0 +1,28 @@
+<%list.forEach(function(item,index){%>
+	<div class="col-md-12 context col-sm-6" id="s">
+		<div class="context-img col-md-5"><a href="/admin/postDetails/<%= item.id%>/<%=item.type%>"><img src="<%=item.banner%>"></a></div>
+		<div class="context-text col-md-7">
+			<p>
+				<a href="/admin/postDetails/<%= item.id%>/<%=item.type%>">
+					<%=item.name%>
+				</a>
+			</p>
+			<div class="" id="desc">
+				<%-item.summary%>
+			</div>
+			<div class="author">
+				<strong><span>所属 : 
+			<%if(item.secondaryName){%>
+				<span style="color: green;"><%=item.secondaryName%></span>
+			<%}else{%>
+				<span style="color: green;"><%=item.firstName%></span>
+			<%}%>	
+		</span></strong>
+				<!--<img href="#" src="../images/stars.png"/>-->
+				&nbsp;&nbsp;
+				<strong><span>推荐于 : <%=item.createDate%></span></strong> &nbsp;&nbsp;
+				<strong><span>阅读 :(<%=item.readerCount%>)</span></strong>
+			</div>
+		</div>
+	</div>
+	<%})%>
